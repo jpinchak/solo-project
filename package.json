@@ -1,0 +1,23 @@
+{
+  "name": "solo-project",
+  "version": "1.0.0",
+  "description": "solo project",
+  "main": "/client/index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpinchak/solo-project.git"
+  },
+  "author": "Julie Pinchak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpinchak/solo-project/issues"
+  },
+  "homepage": "https://github.com/jpinchak/solo-project#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "webpack": "^4.44.1"
+  }
+}
