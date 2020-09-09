@@ -4,7 +4,7 @@ module.exports = {
   entry: './client/index.js',
   output: {
       //publicPath: '/build/',
-      path: path.resolve(__dirname, 'build'),
+      path: path.resolve(__dirname, 'assets/build'),
       filename: 'bundle.js'
   },
   mode: 'production',
@@ -21,7 +21,7 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/i,
+        test: /\.css$/i,
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' },
