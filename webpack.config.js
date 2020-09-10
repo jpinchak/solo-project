@@ -3,11 +3,17 @@ const path = require('path');
 module.exports = {
   entry: './client/index.js',
   output: {
-      //publicPath: '/build/',
       path: path.resolve(__dirname, 'assets/build'),
       filename: 'bundle.js'
   },
-  mode: 'production',
+  devServer: {
+    publicPath: '/assets/build',
+    proxy: {
+      '/items' : 'http://localhost:3000',
+      '/additem' : 'http://localhost:3000'
+    }
+  },
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {

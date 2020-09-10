@@ -1,3 +1,20 @@
 #main-div {
   color: salmon;
 }
+
+.list {
+  background-color: rgb(18, 168, 68);
+  border-radius: 5px;
+  color: white;
+  width: 150px;
+  font-size: 18px;
+  padding-left: 3px;
+}
+
+.list li {
+  list-style: none;
+}
+
+form > input {
+  border: 1px solid black;
+}
