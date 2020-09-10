@@ -21,7 +21,7 @@ app.get('/items',
 app.post('/additem',
   groceryController.addItem,
   (req, res) => {
-    res.status(200).send(res.locals.newItem);
+    res.status(200);
   }
 );
 

@@ -15,6 +15,7 @@ class App extends React.Component {
     this.populateItems = this.populateItems.bind(this);
     this.handleItemChange = this.handleItemChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -29,21 +30,24 @@ class App extends React.Component {
     this.setState({quantity: event.target.value});
   }
 
+  deleteItem(event) {
+    console.log('you will be deleted');
+  }
+
   populateItems() {
     fetch('/items')
       .then(res => res.json())
       .then(gItems => {
-        this.setState({items: gItems})});
+        this.setState({items: gItems})
+      }
+    );
   }
 
   addItem() {
-    //const myItem = document.getElementById('item-input');
-    //const myQuant = document.getElementById('quant-input');
     const listItem = {
-      name: 'bananas',//myItem.value,
-      quantity: 7//myQuant.value
+      name: this.state.newItem,
+      quantity: this.state.quantity
     };
-    //myItem.parentElement.reset();
     fetch('/additem', {
       method: 'POST',
       headers: {
@@ -64,6 +68,7 @@ class App extends React.Component {
         <List 
           items = {this.state.items[i]}
           key = {`groceryItem${i}`}
+          delete = {this.deleteItem}
         />);
     }
     return ( 
@@ -74,11 +79,9 @@ class App extends React.Component {
           <label>Quantity:</label>
           <input id="quant-input" type="text" value={this.state.quantity} onChange={this.handleQuantityChange}></input>
         </form>
-        <button onClick={this.addItem}>Add item</button>
-        <div className="list" id="julie">Julie's items
-          <ul>
-            {gList}
-          </ul>
+        <button className="add-item" onClick={this.addItem}>Add item</button>
+        <div className="list" id="julie">
+          {gList}
         </div>
       </div>
     )

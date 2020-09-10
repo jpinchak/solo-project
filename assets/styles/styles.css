@@ -1,20 +1,60 @@
-#main-div {
-  color: salmon;
+body {
+  padding-left: 20px;
+}
+
+.title {
+  color: #098862;
+  font-family: 'Architects Daughter', cursive;
+  font-size: 28px;
+  margin-bottom: 18px;
 }
 
 .list {
   background-color: rgb(18, 168, 68);
   border-radius: 5px;
   color: white;
-  width: 150px;
-  font-size: 18px;
+  width: 300px;
   padding-left: 3px;
 }
 
 .list li {
   list-style: none;
+  font-size: 18px;
+}
+
+form {
+  color: #008B45;
+  font-family: 'Architects Daughter', cursive;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
 }
 
 form > input {
-  border: 1px solid black;
+  border: 1px solid rgb(4, 116, 4);
+  border-radius: 3px;
+}
+
+.list-elt {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 3px;
+  font-family: 'Architects Daughter', cursive;
+}
+
+.list-elt button {
+  border: none;
+  color: rgb(153, 209, 172);
+  background-color: rgb(18, 168, 68);
+}
+
+.add-item {
+  font-family: 'Architects Daughter', cursive;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border: 1px solid rgb(18, 168, 68);
+  color: #008B45;
+  background-color: rgb(216, 233, 221);
+  border-radius: 3px;
 }
