@@ -47,6 +47,7 @@ form > input {
   border: none;
   color: rgb(153, 209, 172);
   background-color: rgb(18, 168, 68);
+  z-index: 100;
 }
 
 .add-item {

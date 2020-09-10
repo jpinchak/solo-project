@@ -31,7 +31,21 @@ class App extends React.Component {
   }
 
   deleteItem(event) {
-    console.log('you will be deleted');
+    let index = parseInt(event.target.id.substring(4));
+    const deleter = this.state.items[index];
+    const listItem = {
+      name: deleter
+    };
+    fetch('/deleteitem', {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(listItem)
+    })
+    .then(console.log(`${listItem.name} was removed from your list`))
+    .catch(err => console.log(err));
+    //this.populateItems();
   }
 
   populateItems() {
@@ -67,8 +81,8 @@ class App extends React.Component {
       gList.push(
         <List 
           items = {this.state.items[i]}
-          key = {`groceryItem${i}`}
-          delete = {this.deleteItem}
+          itemNum = {i}
+          deleter = {this.deleteItem}
         />);
     }
     return ( 

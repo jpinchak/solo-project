@@ -10,7 +10,8 @@ module.exports = {
     publicPath: '/assets/build',
     proxy: {
       '/items' : 'http://localhost:3000',
-      '/additem' : 'http://localhost:3000'
+      '/additem' : 'http://localhost:3000',
+      '/deleteitem' : 'http://localhost:3000'
     }
   },
   mode: process.env.NODE_ENV,

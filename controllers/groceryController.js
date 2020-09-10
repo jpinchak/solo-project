@@ -32,8 +32,6 @@ groceryController.getGroceries = (req, res, next) => {
 groceryController.addItem = (req, res, next) => {
   console.log(req.body);
   const addItem = `INSERT INTO grocery_items (name, quantity) VALUES ('${req.body.name}', ${req.body.quantity})`;
-  console.log(addItem);
-  res.locals.newItem = {name:"hello", quantity: "many hellos"};
   if(!req.body) {
     return next({
       log: "there was an error",
@@ -44,6 +42,10 @@ groceryController.addItem = (req, res, next) => {
     .then(data => {
       return next();
     });
+}
+
+groceryController.deleteItem = (req, res, next) => {
+  console.log('delete item ', req.body);
 }
 
 module.exports = groceryController;

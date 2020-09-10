@@ -25,4 +25,11 @@ app.post('/additem',
   }
 );
 
+app.delete('/deleteitem',
+  groceryController.deleteItem,
+  (req, res) => {
+    res.status(200);
+  }
+)
+
 app.listen(PORT);
