@@ -24,6 +24,10 @@ class App extends React.Component {
     this.populateItems();
   }
 
+  componentDidUpdate() {
+    this.populateItems();
+  }
+
   handleItemChange(event) {
     this.setState({newItem: event.target.value});
   }
