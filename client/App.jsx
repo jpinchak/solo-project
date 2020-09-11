@@ -134,7 +134,7 @@ class App extends React.Component {
     return ( 
       <div>
         <form>
-          <label>New item:</label>
+          <label>Add new item:</label>
           <input id="item-input" type="text" value={this.state.newItem} onChange={this.handleItemChange}></input>
           <label>Quantity:</label>
           <input id="quant-input" type="text" value={this.state.quantity} onChange={this.handleQuantityChange}></input>

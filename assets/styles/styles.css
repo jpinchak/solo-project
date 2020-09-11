@@ -1,11 +1,16 @@
 body {
   padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
   color: #098862;
   font-family: 'Architects Daughter', cursive;
   font-size: 28px;
+  margin-top: 18px;
   margin-bottom: 18px;
 }
 
@@ -28,6 +33,7 @@ form {
   width: 250px;
   display: flex;
   flex-direction: column;
+  margin-left: 85px;
 }
 
 form > input {
@@ -76,10 +82,11 @@ button:focus {
 
 .add-item {
   font-family: 'Architects Daughter', cursive;
-  margin-top: 8px;
+  margin-top: 12px;
   margin-bottom: 8px;
   border: 1px solid rgb(18, 168, 68);
   color: #008B45;
   background-color: rgb(216, 233, 221);
   border-radius: 3px;
+  margin-left: 175px;
 }
