@@ -18,8 +18,19 @@ app.get('/items',
   }
 );
 
-app.post('/additem',
-  groceryController.addItem,
+app.get('/maxid',
+  groceryController.getMaxId,
+  (req, res) => {
+    console.log(res.locals.unique_id);
+    res.status(200).send(res.locals.unique_id);
+  }
+);
+
+app.post('/additem', 
+  groceryController.getMaxId,
+  (req, res) => {
+    res.status(200).send(res.locals.unique_id);
+  }, groceryController.addItem,
   (req, res) => {
     res.status(200);
   }

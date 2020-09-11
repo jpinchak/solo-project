@@ -8,6 +8,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       items: [],
+      quantities: [],
+      unique_id: [],
       newItem: '',
       quantity: ''
     };
@@ -32,9 +34,11 @@ class App extends React.Component {
 
   deleteItem(event) {
     let index = parseInt(event.target.id.substring(4));
-    const deleter = this.state.items[index];
+    console.log('index', event.target);
+    const deleter = index;
+    console.log(deleter);
     const listItem = {
-      name: deleter
+      index: deleter
     };
     fetch('/deleteitem', {
       method: 'DELETE',
@@ -43,16 +47,20 @@ class App extends React.Component {
       },
       body: JSON.stringify(listItem)
     })
-    .then(console.log(`${listItem.name} was removed from your list`))
+    .then(console.log(`${listItem.index} was removed from your list`))
     .catch(err => console.log(err));
-    //this.populateItems();
+    this.populateItems();
   }
 
   populateItems() {
     fetch('/items')
       .then(res => res.json())
       .then(gItems => {
-        this.setState({items: gItems})
+        this.setState({
+          items: gItems.items,
+          quantities: gItems.quantity,
+          unique_id: gItems.unique_ids
+        });
       }
     );
   }
@@ -81,8 +89,9 @@ class App extends React.Component {
       gList.push(
         <List 
           items = {this.state.items[i]}
-          itemNum = {i}
+          itemNum = {this.state.unique_id[i]}
           deleter = {this.deleteItem}
+          quantities = {this.state.quantities[i]} 
         />);
     }
     return ( 

@@ -2,15 +2,24 @@ const pg = require('pg');
 //const { NamedModulesPlugin } = require('webpack');
 
 const pg_link = 'postgres://jzlegnnu:9DPi_Ra50pB3orMiAvaC--O8IZldUuHu@lallah.db.elephantsql.com:5432/jzlegnnu';
-
 const pg_client = new pg.Client(pg_link);
-
 pg_client.connect();
 
 const groceryController = {};
 
+groceryController.getMaxId = (req, res, next) => {
+  const unique_id_query = 'SELECT MAX(unique_id) from grocery_items;'
+  pg_client.query(unique_id_query)
+  .then(id => {
+    let uniqueid = id.rows[0].max;
+    res.locals.unique_id = [uniqueid + 1]; 
+    return next();
+  });
+  return next();
+}
+
 groceryController.getGroceries = (req, res, next) => {
-  const groceries = 'SELECT name FROM grocery_items';
+  const groceries = 'SELECT name, quantity, unique_id FROM grocery_items';
   //we def need to update this error to something that makes sense
   if(!groceries) {
     return next({
@@ -21,17 +30,28 @@ groceryController.getGroceries = (req, res, next) => {
   pg_client.query(groceries)
     .then(data => {
       let grocItems = [];
+      let quantities = [];
+      let unique_ids = [];
       for(let it of data.rows) {
         grocItems.push(it.name);
+        quantities.push(it.quantity);
+        unique_ids.push(it.unique_id)
       }
-      res.locals.groceries = grocItems;
+      res.locals.groceries = {
+        items: grocItems,
+        quantity: quantities,
+        unique_ids: unique_ids
+      };
       return next();
     })
 }
 
 groceryController.addItem = (req, res, next) => {
   console.log(req.body);
-  const addItem = `INSERT INTO grocery_items (name, quantity) VALUES ('${req.body.name}', ${req.body.quantity})`;
+  console.log('here, ', res.locals.unique_id[0]);
+  let unique_id = res.locals.unique_id[0];
+  const addItem = `INSERT INTO grocery_items (name, quantity, unique_id) VALUES ('${req.body.name}', ${req.body.quantity}, ${unique_id})`;
+  unique_id += 1;
   if(!req.body) {
     return next({
       log: "there was an error",
@@ -45,7 +65,12 @@ groceryController.addItem = (req, res, next) => {
 }
 
 groceryController.deleteItem = (req, res, next) => {
-  console.log('delete item ', req.body);
+  console.log('delete item ', req.body.index);
+  const deleteReq = `DELETE FROM grocery_items WHERE unique_id = ${req.body.index}`;
+  pg_client.query(deleteReq)
+    .then(data => {
+      return next();
+    })
 }
 
 module.exports = groceryController;
