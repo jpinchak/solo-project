@@ -13,7 +13,7 @@ body {
   background-color: rgb(18, 168, 68);
   border-radius: 5px;
   color: white;
-  width: 350px;
+  width: 415px;
   padding-left: 3px;
 }
 
@@ -37,7 +37,7 @@ form > input {
 
 .list-elt {
   display: grid;
-  grid-template-columns: 250px 50px 5px;
+  grid-template-columns: 250px 75px 40px 40px;
   padding-top: 3px;
   font-family: 'Architects Daughter', cursive;
 }
@@ -50,15 +50,28 @@ form > input {
   grid-column: 2;
 }
 
-.button-holder {
+.editer-holder {
   grid-column: 3;
+}
+
+.deleter-holder {
+  grid-column: 4;
 }
 
 .list-elt button {
   border: none;
   color: rgb(153, 209, 172);
   background-color: rgb(18, 168, 68);
+  border-radius: 3px;
   z-index: 100;
+}
+
+.list-elt button:focus {
+  outline: none;
+}
+
+.list-elt button:active {
+  background-color: rgb(19, 110, 50);
 }
 
 .add-item {

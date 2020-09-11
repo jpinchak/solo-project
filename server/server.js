@@ -11,6 +11,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../index.html'));
 });
 
+// app.get('/itemexists',
+//   groceryController.itemExists,
+//   (req, res) => {
+//     console.log(res.locals.itemExists);
+//     res.status(200).send(res.locals.itemExists);
+//   }
+// );
+
 app.get('/items',
   groceryController.getGroceries,
   (req, res) => {
@@ -23,6 +31,13 @@ app.get('/maxid',
   (req, res) => {
     console.log(res.locals.unique_id);
     res.status(200).send(res.locals.unique_id);
+  }
+);
+
+app.put('/additem',
+  groceryController.updateItem,
+  (req, res) => {
+    res.status(200);
   }
 );
 

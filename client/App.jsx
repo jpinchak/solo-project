@@ -18,6 +18,7 @@ class App extends React.Component {
     this.handleItemChange = this.handleItemChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.editItem = this.editItem.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +39,6 @@ class App extends React.Component {
 
   deleteItem(event) {
     let index = parseInt(event.target.id.substring(4));
-    console.log('index', event.target);
     const deleter = index;
     console.log(deleter);
     const listItem = {
@@ -54,6 +54,23 @@ class App extends React.Component {
     .then(console.log(`${listItem.index} was removed from your list`))
     .catch(err => console.log(err));
     this.populateItems();
+  }
+
+  editItem(event) {
+    let uniqu = parseInt(event.target.id.substring(4));
+    let index = this.state.unique_id.indexOf(index);
+    console.log('editer', event.target);
+    // fetch('/additem', {
+    //   method: 'POST',
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(listItem)
+    // })
+    // .then(console.log(`${listItem.name} was added to your list`))
+    // .then(this.setState({newItem: '', quantity: ''}))
+    // .catch(err => console.log(err));
+    // this.populateItems();
   }
 
   populateItems() {
@@ -74,17 +91,32 @@ class App extends React.Component {
       name: this.state.newItem,
       quantity: this.state.quantity
     };
-    fetch('/additem', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(listItem)
-    })
-    .then(console.log(`${listItem.name} was added to your list`))
-    .then(this.setState({newItem: '', quantity: ''}))
-    .catch(err => console.log(err));
-    this.populateItems();
+    if(this.state.items.includes(this.state.newItem) === false) {
+      fetch('/additem', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(listItem)
+      })
+      .then(console.log(`${listItem.name} was added to your list`))
+      .then(this.setState({newItem: '', quantity: ''}))
+      .catch(err => console.log(err));
+      this.populateItems();
+    }
+    else {
+      fetch('/additem', {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(listItem)
+      })
+      .then(console.log('quantity updated'))
+      .then(this.setState({newItem: '', quantity: ''}))
+      .catch(err => console.log(err));
+      this.populateItems();
+    }
   }
 
   render() {
@@ -94,6 +126,7 @@ class App extends React.Component {
         <List 
           items = {this.state.items[i]}
           itemNum = {this.state.unique_id[i]}
+          editer = {this.editItem}
           deleter = {this.deleteItem}
           quantities = {this.state.quantities[i]} 
         />);

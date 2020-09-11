@@ -47,8 +47,6 @@ groceryController.getGroceries = (req, res, next) => {
 }
 
 groceryController.addItem = (req, res, next) => {
-  console.log(req.body);
-  console.log('here, ', res.locals.unique_id[0]);
   let unique_id = res.locals.unique_id[0];
   const addItem = `INSERT INTO grocery_items (name, quantity, unique_id) VALUES ('${req.body.name}', ${req.body.quantity}, ${unique_id})`;
   unique_id += 1;
@@ -64,6 +62,17 @@ groceryController.addItem = (req, res, next) => {
     });
 }
 
+groceryController.updateItem = (req, res, next) => {
+  let count = parseInt(req.body.quantity);
+  console.log(count);
+  console.log(req.body.name);
+  const updateRequest = `UPDATE grocery_items SET quantity = ((SELECT quantity FROM grocery_items WHERE name = '${req.body.name}') + ${count}) WHERE name = '${req.body.name}';`
+  pg_client.query(updateRequest)
+    .then(data => {
+      return next();
+    });
+}
+
 groceryController.deleteItem = (req, res, next) => {
   console.log('delete item ', req.body.index);
   const deleteReq = `DELETE FROM grocery_items WHERE unique_id = ${req.body.index}`;
@@ -72,5 +81,14 @@ groceryController.deleteItem = (req, res, next) => {
       return next();
     })
 }
+
+// groceryController.itemExists = (req, res, next) => {
+//   const checkItem = `SELECT EXISTS(SELECT * FROM grocery_items WHERE name = ${req.params.name});`
+//   pg_client.query(checkItem)
+//     .then(bool => {
+//       res.locals.itemExists = bool;
+//       return next();
+//     });
+// }
 
 module.exports = groceryController;
