@@ -30,18 +30,14 @@ groceryController.getGroceries = (req, res, next) => {
   pg_client.query(groceries)
     .then(data => {
       let grocItems = [];
-      let quantities = [];
-      let unique_ids = [];
       for(let it of data.rows) {
-        grocItems.push(it.name);
-        quantities.push(it.quantity);
-        unique_ids.push(it.unique_id)
+        grocItems.push({
+          itemName: it.name,
+          quantity: it.quantity,
+          uniqueId: it.unique_id
+        });
       }
-      res.locals.groceries = {
-        items: grocItems,
-        quantity: quantities,
-        unique_ids: unique_ids
-      };
+      res.locals.groceries = grocItems;
       return next();
     })
 }
