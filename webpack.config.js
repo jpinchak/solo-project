@@ -12,7 +12,6 @@ module.exports = {
       '/items' : 'http://localhost:3000',
       '/additem' : 'http://localhost:3000',
       '/deleteitem' : 'http://localhost:3000',
-      '/maxid': 'http://localhost:3000'
     }
   },
   mode: process.env.NODE_ENV,

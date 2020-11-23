@@ -7,17 +7,6 @@ pg_client.connect();
 
 const groceryController = {};
 
-groceryController.getMaxId = (req, res, next) => {
-  const unique_id_query = 'SELECT MAX(unique_id) from grocery_items;'
-  pg_client.query(unique_id_query)
-  .then(id => {
-    let uniqueid = id.rows[0].max;
-    res.locals.unique_id = [uniqueid + 1]; 
-    return next();
-  });
-  return next();
-}
-
 groceryController.getGroceries = (req, res, next) => {
   const groceries = 'SELECT name, quantity, unique_id FROM grocery_items';
   //we def need to update this error to something that makes sense
@@ -47,16 +36,15 @@ groceryController.getGroceries = (req, res, next) => {
 }
 
 groceryController.addItem = (req, res, next) => {
-  let unique_id = res.locals.unique_id[0];
-  const addItem = `INSERT INTO grocery_items (name, quantity, unique_id) VALUES ('${req.body.name}', ${req.body.quantity}, ${unique_id})`;
-  unique_id += 1;
+  const text = `INSERT INTO grocery_items (name, quantity) VALUES ($1, $2)`;
+  const values = [req.body.name, req.body.quantity];
   if(!req.body) {
     return next({
       log: "there was an error",
       message: {err: "you know as much about this as I do, probably"}
     });
   }
-  pg_client.query(addItem)
+  pg_client.query(text, values)
     .then(data => {
       return next();
     });
