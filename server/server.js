@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 const PORT = 3000;
-const groceryController = require('../controllers/groceryController');
+const groceryController = require('./controllers/groceryController');
 
 app.use('/assets', express.static('assets'));
 app.use(express.json());

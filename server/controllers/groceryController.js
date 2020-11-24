@@ -18,17 +18,9 @@ groceryController.getGroceries = (req, res, next) => {
   }
   pg_client.query(groceries)
     .then(data => {
-      let grocItems = [];
-      for(let it of data.rows) {
-        grocItems.push({
-          itemName: it.name,
-          quantity: it.quantity,
-          uniqueId: it.unique_id
-        });
-      }
-      res.locals.groceries = grocItems;
+      res.locals.groceries = data.rows;
       return next();
-    })
+    });
 }
 
 groceryController.addItem = (req, res, next) => {
@@ -48,8 +40,6 @@ groceryController.addItem = (req, res, next) => {
 
 groceryController.updateItem = (req, res, next) => {
   let count = parseInt(req.body.quantity);
-  console.log(count);
-  console.log(req.body.name);
   const updateRequest = `UPDATE grocery_items SET quantity = ((SELECT quantity FROM grocery_items WHERE name = '${req.body.name}') + ${count}) WHERE name = '${req.body.name}';`
   pg_client.query(updateRequest)
     .then(data => {
